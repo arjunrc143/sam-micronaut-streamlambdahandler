@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  # See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
+  # for more info to see how to tune the lambda function configs based on your use case.
+  AppFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java11
+      Handler: io.micronaut.function.aws.proxy.MicronautLambdaHandler
+      Timeout: 300
+      MemorySize: 512
+      CodeUri: ./target/original-micronautguide-1.0-SNAPSHOT.jar
+      Layers:
+        - !ImportValue SamMicronautLambdaDependenciesLayer-dev-arjun
+        # - !Ref FunctionLayer
+        # https://aws-otel.github.io/docs/getting-started/lambda/lambda-java
+        - !Sub arn:aws:lambda:${AWS::Region}:901920570463:layer:aws-otel-java-wrapper-ver-1-2-0:2
+      Events:
+        getHello:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/books
+            Method: get

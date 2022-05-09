@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  # See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
+  # for more info to see how to tune the lambda function configs based on your use case.
+  DependenciesLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: sam-micronaut-app-streamhandler-dependencies-dev-arjun
+      Description: Dependencies for sam micronaut app
+      ContentUri: ../target/micronautguide-1.0-SNAPSHOT-lambda-layer.zip
+      CompatibleRuntimes:
+      - java11
+      RetentionPolicy: Retain
+Outputs:
+  DependenciesLayerExport:
+    Description: Layer arn of the service dependency libs layer
+    Value:
+      Ref: DependenciesLayer
+    Export:
+      Name: SamMicronautLambdaDependenciesLayer-dev-arjun

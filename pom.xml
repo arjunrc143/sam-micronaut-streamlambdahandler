@@ -29,7 +29,40 @@
     </repository>
   </repositories>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-bom</artifactId>
+        <version>1.13.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-events</artifactId>
+      <version>3.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+      <version>1.46.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-netty-shaded</artifactId>
+      <version>1.46.0</version>
+    </dependency>
+
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-inject</artifactId>
@@ -42,13 +75,8 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-api-proxy</artifactId>
+      <artifactId>micronaut-function-aws</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws-api-proxy-test</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -72,17 +100,12 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-jackson-databind</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
       <artifactId>micronaut-runtime</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>jakarta.annotation</groupId>
-      <artifactId>jakarta.annotation-api</artifactId>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -90,7 +113,45 @@
       <artifactId>logback-classic</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk</artifactId>
+      <version>1.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+      <version>1.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api-metrics</artifactId>
+      <version>1.9.1-alpha</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-jaeger</artifactId>
+      <version>1.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp</artifactId>
+      <version>1.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-extension-aws</artifactId>
+      <version>1.13.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-extension-trace-propagators</artifactId>
+      <version>1.13.0</version>
+    </dependency>
   </dependencies>
+
 
   <build>
     <plugins>

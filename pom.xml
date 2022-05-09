@@ -43,6 +43,16 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.micronaut.aws</groupId>
+      <artifactId>micronaut-function-aws-api-proxy</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.aws</groupId>
+      <artifactId>micronaut-function-aws-api-proxy-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-lambda-java-core</artifactId>
       <version>1.2.1</version>

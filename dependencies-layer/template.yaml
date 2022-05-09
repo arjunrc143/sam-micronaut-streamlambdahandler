@@ -8,7 +8,7 @@ Resources:
     Properties:
       LayerName: sam-micronaut-app-streamhandler-dependencies-dev-arjun
       Description: Dependencies for sam micronaut app
-      ContentUri: ../target/micronautguide-1.0-SNAPSHOT-lambda-layer.zip
+      ContentUri: ../target/micronautguide-1.0-lambda-layer.zip
       CompatibleRuntimes:
       - java11
       RetentionPolicy: Retain

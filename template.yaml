@@ -10,7 +10,7 @@ Resources:
       Handler: io.micronaut.function.aws.proxy.MicronautLambdaHandler
       Timeout: 300
       MemorySize: 512
-      CodeUri: ./target/original-micronautguide-1.0-SNAPSHOT.jar
+      CodeUri: ./target/original-micronautguide-1.0.jar
       Layers:
         - !ImportValue SamMicronautLambdaDependenciesLayer-dev-arjun
         # - !Ref FunctionLayer
@@ -22,3 +22,39 @@ Resources:
           Properties:
             Path: /v1/books
             Method: get
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          LOG_LEVEL: INFO
+          # Lambda API GW Proxy
+          #AWS_LAMBDA_EXEC_WRAPPER: "/opt/otel-proxy-handler"
+          # Lambda Stream Handler (e.g. Quarkus, Micronaut)
+          #AWS_LAMBDA_EXEC_WRAPPER: "/opt/otel-stream-handler"
+          # Lambda Regular Handler
+          AWS_LAMBDA_EXEC_WRAPPER: "/opt/otel-handler"
+          # Config: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md
+          OTEL_INSTRUMENTATION_AWS_LAMBDA_FLUSH_TIMEOUT: "3000"
+          OTEL_INSTRUMENTATION_AWS_LAMBDA_HANDLER: "example.micronaut.BookRequestHandler::execute"
+          # Configure authentication. Format is either "Authorization=Bearer <token>" or "ApiKey= Base64(ApiKeyId:ApiKeySecret)"
+          OTEL_EXPORTER_OTLP_HEADERS: "Authorization=Bearer <TOKEN VALUE>"
+          OTEL_SERVICE_NAME: "team-otel-java-lambda-java11-sample"
+          OTEL_RESOURCE_ATTRIBUTES: "service.name=team-otel-java-lambda-java11-sample,service.namespace=team,service.version=LATEST"
+          OTEL_LOG_LEVEL: "debug"
+          OTEL_PROPAGATORS: "tracecontext,b3,b3multi,ottrace,xray,jaeger"
+          # Suspend metrics propagation
+          OTEL_METRICS_EXPORTER: "none"
+          OTEL_TRACES_SAMPLER: "always_on"
+          # Select your exporter: https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md#otlp-exporter-both-span-and-metric-exporters
+          OTEL_TRACES_EXPORTER: "otlp"
+          # Jaeger GRPC (requires io.opentelemetry:opentelemetry-exporter-jaeger dependency)
+          # OTEL_EXPORTER_OTLP_ENDPOINT: "https://endpoint"
+          OTEL_EXPORTER_JAEGER_ENDPOINT: "https://endpoint"
+          OTEL_EXPORTER_JAEGER_TIMEOUT: "3000"
+          # OTLP Over GRPC (requires io.opentelemetry:opentelemetry-exporter-otlp dependency)
+          OTEL_EXPORTER_OTLP_ENDPOINT: "https://endpoint"
+          OTEL_EXPORTER_OTLP_TIMEOUT: "3000"
+      # Attach policies here to give the function permission to access other AWS resources if needed
+      # See: https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst
+      # eg:
+      #Policies:
+      # - S3ReadPolicy:
+      #     BucketName: test-bucket

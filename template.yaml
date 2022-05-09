@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: java11
-      Handler: io.micronaut.function.aws.proxy.MicronautLambdaHandler
+      Handler: io.micronaut.function.aws.proxy.MicronautLambdaHandler::handleRequest
       Timeout: 300
       MemorySize: 512
       CodeUri: ./target/original-micronautguide-1.0.jar
@@ -33,7 +33,7 @@ Resources:
           AWS_LAMBDA_EXEC_WRAPPER: "/opt/otel-handler"
           # Config: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/sdk-environment-variables.md
           OTEL_INSTRUMENTATION_AWS_LAMBDA_FLUSH_TIMEOUT: "3000"
-          OTEL_INSTRUMENTATION_AWS_LAMBDA_HANDLER: "example.micronaut.BookRequestHandler::execute"
+          OTEL_INSTRUMENTATION_AWS_LAMBDA_HANDLER: "io.micronaut.function.aws.proxy.MicronautLambdaHandler::handleRequest"
           # Configure authentication. Format is either "Authorization=Bearer <token>" or "ApiKey= Base64(ApiKeyId:ApiKeySecret)"
           OTEL_EXPORTER_OTLP_HEADERS: "Authorization=Bearer <TOKEN VALUE>"
           OTEL_SERVICE_NAME: "team-otel-java-lambda-java11-sample"
